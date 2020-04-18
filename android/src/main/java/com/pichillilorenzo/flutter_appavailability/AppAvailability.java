@@ -75,9 +75,13 @@ public class AppAvailability implements MethodCallHandler {
     PackageManager packageManager = registrar.context().getPackageManager();
     List<PackageInfo> apps = packageManager.getInstalledPackages(0);
     List<Map<String, Object>> installedApps = new ArrayList<>(apps.size());
-    int systemAppMask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+    int systemAppMask = FLAG_INSTALLED;
 
     for (PackageInfo pInfo : apps) {
+      if ((pInfo.applicationInfo.flags & systemAppMask) == 0) {
+        continue;
+      }
+
       Map<String, Object> map = this.convertPackageInfoToJson(pInfo);
       installedApps.add(map);
     }
