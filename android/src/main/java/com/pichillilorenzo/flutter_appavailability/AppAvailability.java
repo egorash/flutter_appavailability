@@ -73,11 +73,30 @@ public class AppAvailability implements MethodCallHandler {
 
   private List<Map<String, Object>> getInstalledApps() {
     PackageManager packageManager = registrar.context().getPackageManager();
+    List<PackageInfo> apps = packageManager.getInstalledPackages(0);
+    List<Map<String, Object>> installedApps = new ArrayList<>(apps.size());
+    int systemAppMask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+
+    for (PackageInfo pInfo : apps) {
+      if ((pInfo.applicationInfo.flags & systemAppMask) != 0) {
+        continue;
+      }
+
+      Map<String, Object> map = this.convertPackageInfoToJson(pInfo);
+      installedApps.add(map);
+    }
+
+    return installedApps;
+  }
+  
+  private List<Map<String, Object>> getApps() {
+    PackageManager packageManager = registrar.context().getPackageManager();
     List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
     List<Map<String, Object>> installedApps = new ArrayList<>(apps.size());
-    
+   
+
     for (ApplicationInfo pInfo : apps) {
-      Map<String, Object> map = this.convertPackageInfoToJson(pInfo);
+      Map<String, Object> map = this.convertAppInfoToJson(pInfo);
       installedApps.add(map);
     }
 
@@ -98,7 +117,16 @@ public class AppAvailability implements MethodCallHandler {
     return null;
   }
 
-  private Map<String, Object> convertPackageInfoToJson(ApplicationInfo info) {
+  private Map<String, Object> convertPackageInfoToJson(PackageInfo info) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("app_name", info.applicationInfo.loadLabel(registrar.context().getPackageManager()).toString());
+    map.put("package_name", info.packageName);
+    map.put("version_code", String.valueOf(info.versionCode));
+    map.put("version_name", info.versionName);
+    return map;
+  }
+  
+  private Map<String, Object> convertAppInfoToJson(ApplicationInfo info) {
     Map<String, Object> map = new HashMap<>();
     map.put("app_name", info.applicationInfo.loadLabel(registrar.context().getPackageManager()).toString());
     map.put("package_name", info.packageName);
