@@ -78,10 +78,6 @@ public class AppAvailability implements MethodCallHandler {
     int systemAppMask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
 
     for (PackageInfo pInfo : apps) {
-      if ((pInfo.applicationInfo.flags & systemAppMask) != 0) {
-        continue;
-      }
-
       Map<String, Object> map = this.convertPackageInfoToJson(pInfo);
       installedApps.add(map);
     }
