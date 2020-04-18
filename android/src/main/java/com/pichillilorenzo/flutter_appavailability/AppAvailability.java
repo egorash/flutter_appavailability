@@ -46,7 +46,7 @@ public class AppAvailability implements MethodCallHandler {
         this.checkAvailability( uriSchema, result );
         break;
       case "getInstalledApps":
-        result.success(getInstalledApps());
+        result.success(getApps());
         break;
       case "isAppEnabled":
         uriSchema = call.argument("uri").toString();
