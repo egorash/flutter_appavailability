@@ -73,10 +73,10 @@ public class AppAvailability implements MethodCallHandler {
 
   private List<Map<String, Object>> getInstalledApps() {
     PackageManager packageManager = registrar.context().getPackageManager();
-    List<PackageInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+    List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
     List<Map<String, Object>> installedApps = new ArrayList<>(apps.size());
     
-    for (PackageInfo pInfo : apps) {
+    for (ApplicationInfo pInfo : apps) {
       Map<String, Object> map = this.convertPackageInfoToJson(pInfo);
       installedApps.add(map);
     }
@@ -98,7 +98,7 @@ public class AppAvailability implements MethodCallHandler {
     return null;
   }
 
-  private Map<String, Object> convertPackageInfoToJson(PackageInfo info) {
+  private Map<String, Object> convertPackageInfoToJson(ApplicationInfo info) {
     Map<String, Object> map = new HashMap<>();
     map.put("app_name", info.applicationInfo.loadLabel(registrar.context().getPackageManager()).toString());
     map.put("package_name", info.packageName);
