@@ -56,6 +56,9 @@ public class AppAvailability implements MethodCallHandler {
         uriSchema = call.argument("uri").toString();
         this.launchApp(uriSchema , result);
         break;
+      case "openDialer":
+        this.OpenDialer();
+        break;
       default:
         result.notImplemented();
     }
@@ -119,6 +122,11 @@ public class AppAvailability implements MethodCallHandler {
     }
 
     return null;
+  }
+
+  private void OpenDialer(){
+    Intent intent = new Intent(Intent.ACTION_DIAL);
+    startActivity(intent);
   }
 
   private Map<String, Object> convertPackageInfoToJson(PackageInfo info) {

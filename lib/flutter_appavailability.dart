@@ -31,7 +31,7 @@ class AppAvailability {
         "app_name": app["app_name"],
         "package_name": app["package_name"],
         "versionCode": app["versionCode"],
-        "version_name": app["version_name"]
+        "version_name": app["version_name"],
       };
     }
     else if (Platform.isIOS) {
@@ -72,6 +72,15 @@ class AppAvailability {
       return list;
     }
     return new List(0);
+  }
+
+   /// Only for **Android**.
+  ///
+  /// Check if the app is enabled or not with the given [uri] scheme.
+  ///
+  /// If the app isn't found, then a [PlatformException] is thrown.
+  static void openDialer() async{
+    await _channel.invokeMethod("openDialer");
   }
 
   /// Only for **Android**.
