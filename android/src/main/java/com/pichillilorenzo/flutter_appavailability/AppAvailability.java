@@ -125,8 +125,6 @@ public class AppAvailability implements MethodCallHandler {
   }
 
   private void openDialer(){
-    Intent intent = new Intent(Intent.ACTION_DIAL);
-    StartActivity(intent);
   }
 
   private Map<String, Object> convertPackageInfoToJson(PackageInfo info) {
