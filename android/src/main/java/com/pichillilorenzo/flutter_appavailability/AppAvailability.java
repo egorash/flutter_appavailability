@@ -57,7 +57,7 @@ public class AppAvailability implements MethodCallHandler {
         this.launchApp(uriSchema , result);
         break;
       case "openDialer":
-        this.OpenDialer();
+        this.openDialer();
         break;
       default:
         result.notImplemented();
@@ -124,7 +124,7 @@ public class AppAvailability implements MethodCallHandler {
     return null;
   }
 
-  private void OpenDialer(){
+  private void openDialer(){
     Intent intent = new Intent(Intent.ACTION_DIAL);
     startActivity(intent);
   }
