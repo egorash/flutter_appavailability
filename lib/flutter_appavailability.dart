@@ -81,6 +81,7 @@ class AppAvailability {
   /// If the app isn't found, then a [PlatformException] is thrown.
   static void openDialer() async{
     await _channel.invokeMethod("openDialer");
+
   }
 
   /// Only for **Android**.
